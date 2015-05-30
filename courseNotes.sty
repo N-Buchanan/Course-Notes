@@ -1,0 +1,159 @@
+\usepackage{listings} % code blocks
+\usepackage{amsmath} % math formatting
+\usepackage{amsthm} % theorem labelling
+\usepackage{amssymb} % math symbols
+\usepackage{thmtools} % end marks for theorem environments
+\usepackage{color} % define colours
+\usepackage{hyperref} % clickable links
+\usepackage{fancyhdr}
+\usepackage[left=1.2in,right=1.2in,top=1.2in,bottom=1.2in]{geometry}
+\usepackage{graphicx}
+\usepackage{titlesec}
+\usepackage{nameref}
+\usepackage[parfill]{parskip}
+\usepackage{enumerate}
+
+
+% hyperref setup
+\hypersetup{colorlinks=true,urlcolor=blue,linkcolor=blue}
+
+% Colours to match netbeans' default configurations
+\definecolor{keywordColour}{RGB}{0,0,230}
+\definecolor{stringColour}{RGB}{206,123,0}
+\definecolor{commentColour}{RGB}{150,150,150}
+
+% format listing environment
+\lstset{
+	keywordstyle=\color{keywordColour}, % keywords will now be the netbeans default
+	language=Java, % you can override this to practically any language you want
+	frame=single, % puts a frame around the code block
+	commentstyle=\color{commentColour}, % comments will be the netbeans default colour
+	numbers=left, % options are none, left, and right (they look terrible with the frame)
+	numbersep=15pt, % distance from the line numbers to the code
+	showstringspaces=false, % setting this to true shows an underscore-like character in string spaces
+	tabsize=2, 
+	breaklines=true, % auto-wrap lines 
+	breakatwhitespace=true, % only auto-break at whitespace
+	numberstyle=\small\color{commentColour}, % make linenumbers the same colour as comments
+	stringstyle=\color{stringColour}, % make string colours the netbeans default
+	basicstyle=\ttfamily % make the text monospaced 
+}
+
+
+% theorem definitions
+\newtheorem{defn}{Definition}[section]
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lem}{Lemma}[section]
+\newtheorem{cor}{Corollory}[section]
+\newtheorem{ident}{Identity}[section]
+
+\newcommand*{\perm}[2]{{}^{#1}\!P_{#2}}%
+\newcommand*{\comb}[2]{{}^{#1}C_{#2}}%
+
+% piecewise function (stolen from Liam Horne)
+\newcommand{\piecewise}[4]{\left\{
+	\begin{array}{lr}
+		#1 & \mbox{#2} \\ #3 & \mbox{#4}
+	\end{array}
+	\right.}
+
+
+
+% variables to be supplied in the document
+\let\@courseName\relax
+\def\courseName#1{\def\@courseName{#1}}
+
+\let\@courseCode\relax
+\def\courseCode#1{\def\@courseCode{#1}}
+
+\let\@term\relax
+\def\term#1{\def\@term{#1}}
+
+\let\@prof\relax
+\def\prof#1{\def\@prof{#1}}
+
+\let\@auth\relax
+\def\auth#1{\def\@auth{#1}}
+
+\let\@secName\relax
+\def\secName#1{\def\@secName{#1}}
+
+% generate titlepage and table of contents
+\newcommand{\tpage}{%
+	\begin{titlepage}
+		\begin{center}
+			\vfill
+			\includegraphics{../school_logo.png}\\
+			
+			\vspace{1cm}
+			\hrule
+			\vspace{5mm}
+			\textbf{\Huge\@courseCode\ Course Notes}\\
+			\vspace{5mm}
+			\hrule		
+			\vspace{3cm}
+			\textbf{\Large\@courseName}\\
+			\vspace{5mm}
+			\textbf{\Large\@prof}\\
+			\vspace{5mm}
+			\textbf{\Large\@term}\\
+			\vspace{5mm}
+			\textbf{\Large University of Waterloo}	
+			
+			
+			\vfill
+			\textbf{\Large\@auth}\\
+			\vspace{5mm}
+			\textbf{\Large \today}	
+			
+		\end{center}
+	\end{titlepage}
+	\thispagestyle{empty}
+	\tableofcontents
+	\thispagestyle{empty}
+	\setcounter{page}{0}
+	\clearpage
+	\newpage
+}%
+
+% Header and Footer
+\fancypagestyle{plain}{%
+	\fancyhf{}
+	\fancyhead[C]{\large\@courseName}
+	\fancyhead[L]{\rule[-3ex]{0pt}{3ex}\large\@term}
+%	\fancyhead[R]{\@currentlabelname}
+	\fancyhead[R]{\@secName\ \thesection}
+	\fancyfoot[C]{-- \thepage\ --}
+	
+}%
+\pagestyle{plain}
+
+
+% Format section titles
+\titleformat{\section}{\huge\bf\raggedright}{\@secName\ \thesection: }{0ex}{}
+\titleformat{\subsection}{\Large\bf\raggedright}{\thesubsection: }{0ex}{}
+\titleformat{\subsubsection}{\large\bf\raggedright}{\thesubsubsection: }{0ex}{}
+
+\newcounter{lectureNumber}
+\setcounter{lectureNumber}{1}
+
+\newcounter{tutorialNumber}
+\setcounter{tutorialNumber}{1}
+
+\newcommand{\lecnum}{\thelectureNumber 
+	\stepcounter{lectureNumber}	
+}
+
+\newcommand{\tutnum}{
+	\thetutorialNumber
+	\stepcounter{tutorialNumber}
+	}
+
+\newcommand{\lecture}[2][\lecnum]{\marginpar{Lecture #1\\#2}}
+\newcommand{\tutorial}[2][\tutnum]{\hrule \marginpar{Tutorial #1\\#2}}
+\newcommand{\example}{\textbf{\\Example\\}}
+
+
+% shorten lstinline command
+\newcommand{\cd}[1]{\lstinline|#1|}
+\newcommand{\tc}[1]{\texttt{#1}}

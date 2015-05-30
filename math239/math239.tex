@@ -1,0 +1,1056 @@
+\documentclass{article}
+
+\usepackage{../courseNotes}
+
+
+\courseName{Introduction to Combinatorics}
+\courseCode{Math 239}
+\prof{Martin Pei}
+\auth{Nolan Buchanan}
+\secName{Topic}
+\term{3B}
+
+
+
+
+% conveniently write [n]
+\newcommand{\setn}{$[n]$}
+\newcommand{\oto}[1]{$[#1]$}
+
+\newcommand{\todots}[2]{#1_1, \dots, #1_#2}
+\newcommand{\sumdots}[2]{#1_1 + \dots + #1_#2}
+
+\newcommand{\func}[3][f]{$#1: #2 \rightarrow #3$}
+
+% alias union and intersect
+\newcommand{\intersect}{\cap}
+\newcommand{\union}{\cup}
+
+\begin{document}
+\tpage
+
+\lecture{04-05-2015}
+\section{Counting}
+\label{sec:counting}
+
+
+\subsection{Enumeration}
+We will convert counting problems into sets. \\
+$[n] = $ The set of positive integers from $1$ to $n$ \\
+$\mathbb{N} = $ The set of positive integers
+
+\subsubsection{Cartesian Products}
+If $A$ and $B$ are sets, the cartesian product of $A$ and $B$ is $$A \times B = \{(a,b) | a \in A, b \in B\}$$
+
+\example $$A = \{1,2\},  B = \{2,4,6\}$$
+$$A \times B = \{(1,2), (1,4), (1,6), (2,2), (2,4), (2,6) \}$$
+Note that order within the pairs matters! $(1,2) \neq (2,1)$.
+
+
+If $A$ and $B$ are finite, then $|A \times B | = | A | \times | B |$.
+
+Cartesian products are NOT associative $(A \times B) \times C \neq A \times (B \times C)$
+$$|A \times B \times C | = |A| \times |B| \times |C|$$
+$$A^n = \{(a_1,a_2,\dots , a_n) | a_i \in A\} \qquad |A^n| = |A|^n$$
+
+\example Let $E$ be the elements of $[6] \times [6]$ whose sum is even. Partition $E$ into $E_1$ and $E_2$ where:
+% $E_1$ are those where $a,b$ are even and $E_2$ are those where $a,b$ are odd.
+$$E_1 = \{(a,b) \in [6] \times [6] | a,b \text{ are even}\}$$
+$$E_2 = \{(a,b) \in [6] \times [6] | a,b \text{ are odd}\}$$
+
+$$E_1 = \{2,4,6\} \times \{2,4,6\} \qquad |E_1| = 3 \times 3 = 9$$
+$$E_2 = \{1,3,5\} \times \{1,3,5\} \qquad |E_2| = 3 \times 3 = 9$$
+$$E_1 \cap E_2 = \O \qquad |E|=|E_1|+|E_2| = 18$$
+
+\subsection{Review: Basic Counting}
+
+
+\begin{defn}
+	\textbf{Permutation:}
+	How many ways can we arrange elements of $[n]$ on a line? $n!$
+\end{defn}
+
+\begin{defn}
+	\textbf{Combination:}
+	How many subsets of $[n]$ have size $k$?
+\end{defn}
+
+
+First pick $k$ elements in order $(\frac{n!}{(n-k)!})$. Each subset is counted $k!$ times in order so the number of subsets is $\frac{n!}{(n-k)!k!} = \binom nk$
+
+$n$ choose $k$ is called the binomial coefficient.
+
+\subsection{Binomial Theorem}
+$$(1+x)^n = \sum_{k=0}^{n} \binom nk x^k$$
+
+\lecture{02-05-2015}
+
+\section{Bijections}
+\begin{defn}
+Let $A$, $B$ be finite sets. Consider a function $f:A \rightarrow B$, $f$ is \textbf{$1$ to $1$} if $x\neq y$ in 
+$A \rightarrow f(x) \neq f(y)$ in $B$. (Contrapositive: $f(x) = f(y) \rightarrow x=y$)
+\end{defn}
+
+If $f$ is $1$ to $1$, $|B| \geq |A|$.
+
+\begin{defn}
+$f$ is \textbf{onto} if $\forall y \in B \exists x \in A s.t. f(x) = y$  (Every element in $B$ is being mapped to by something in $A$)
+\end{defn}
+
+if $f$ is onto, $|B| \leq |A|$.
+
+$f$ is a bijection if $f$ is one-to-one \emph{and} onto. Therefore, $|A| = |B|$.
+
+\example
+$A= \{1,2,3\} \qquad B= \{a,b,c\}$
+
+Define $f:A \rightarrow B$ by $f(1)=a, f(2)=b, f(3)=c$.
+
+Therefore, $f$ is a bijection.
+
+
+\example
+Let $S$ be the set of all subsets of $[n]$ of size $k$. Let $T$ be the set of all subsets of $[n]$ of size $n-k$.
+
+Suppose $n=4, k = 1$
+
+$S=\{ \{1\}, \{2\}, \{3\}, \{4\} \}$
+
+$T=\{ \{1,2,3\}, \{1,2,4\}, \{1,3,4\}, \{2,3,4\} \}$
+
+The mapping is the complement of elements in $S$.
+$\{1\} \rightarrow \{2,3,4\}$
+$\{2\} \rightarrow \{1,3,4\}$ etc.
+
+Define $f:S \rightarrow T$ by $f(x) = [n] \textbackslash X$ for any $X \in S$ check $f(x) \in T$ since $X$ is a subset of size $k$, $[n] \textbackslash X$ is a subset of $[n]$ of size $n-k$ so $f(x) \in T$ Thus, $f$ is a bijection.
+
+The \emph{inverse} of $f:A \rightarrow B$ is the function $f^{-1}:B \rightarrow A$ s.t. $\forall x \in A, f^{-1}(f(x)) = x$ and $\forall y \in B \quad f(f^{-1}(y))=y$
+
+Theorem
+
+$f:A \rightarrow B$ is a bijection \emph{iff} its inverse exists.
+
+%TODO reference example properly
+Back to the above example, $f$ has an inverse. $f^{-1}:T \rightarrow S$ where $f^{-1}(Y) = [n] \textbackslash Y \forall Y \in T$. $f^{-1}$ is well-defined.
+
+For any $X \in S$, $f^{-1}(f(X)) = f^{-1}([n] \textbackslash X) = [n] \textbackslash ([n] \textbackslash X) = X$
+
+For any $Y \in T f(f^{-1}(Y)) = f([n] \textbackslash Y) = [n] \textbackslash ([n] \textbackslash Y) = Y$
+
+$f^{-1}$ is an inverse of $f$ therefore $f$ is a bijection.
+
+This establishes that $|S| = |T|$. Also note that $|S| = \binom nk, |T| = \binom nk$ So $\binom nk = \binom n{n-k}$. The bijection serves as a combinatorial proof of this equation.
+
+\example
+Let $S$ be the set of all subsets of \setn. Let $T$ be the set of all binary strings of length n. 
+
+Suppose $n=3$
+$$S=\{\O, \{1\}, \{2\}, \{3\}, \{1,2\},\{1,3\},\{1,2,3\}\}$$
+$$T = \{000, 001, 010, 011, 100, 101, 110, 111\} $$
+
+Mapping: $1$ represents that the number corresponding to that position exists in the set. $0$ represents that the number does not exist in the set.
+
+Define $f:T \rightarrow S$ where $f(a_1, a_2, \dots, a_n) = \{i | i \in [n], a_i = 1\}$. In other words, if $a_i$ is $1$, put $i$ in the subset.
+
+The inverse is $f^{-1}:S \rightarrow T$ where for each $x \in S, f(x) = a_1a_2 \dots a_n$ where $a = 
+\piecewise{$1$}
+	{$i \in X$}
+	{$0$}
+	{$i \not\in X$}$
+
+so $f$ is a bijection.
+
+\lecture{08-05-2015}
+\section{Combinatorial Proofs}
+
+$S = $ subsets of \oto{n}, $T = $ binary string of length $n$, \func{T}{S} is a bijection. (use mapping from last lecture)
+
+$f$ implies that $|S|=|T|$, $|T| = 2^n$. Each $x \in $ \setn either exists in the subset or does not.
+
+\subsection{Proving Bijections}
+For this course you need:
+\begin{enumerate}
+	\item Clear defintion of \func{A}{B}
+	\item Show that $f(x) \in B \forall x \in A, \forall x \in A, f(x) \in B$
+	\item Define the inverse \func[f^{-1}]{B}{A}
+\end{enumerate}
+
+\subsection{Combinatorial Proofs}
+Recall the Binomial Theorem:
+$$(1+x)^k = \sum_{k=0}^{n} \binom nk x^k$$
+
+We will prove this by counting
+$$(1+x)^n = (1+x)(1+x) \dots (1+x) \text{ n times}$$
+
+Each term in the expansion is a product of $n$ things, one from each bracket. $(1+x)^n$ is the sum of all such terms. Each term has the form $a_1a_2 \dots a_n$ where $a_i$ is either $1$ or $x$. This gives $x^k$ when $k$ of the $a_i$ terms are $x$ and $n-k$ of them are $1$. There are $\binom nk$ ways to do so. The coefficient of $x^k$ in $(1+x)^n$ is $\binom nk$. This proves the binomial theorem.
+
+\example
+Plug $x=1$ into binomial theorem to get $2^n = \sum_{k=0}^{n} \binom nk \qquad (2^3 = \binom 30 + \binom 31 + \binom 32 + \binom 33 )$
+
+\textbf{Combinatorial Proof\\}
+Let $S$ be all binary strings of length $n$ so $|S| = 2^n$.
+
+Let $S_k$ be the set of binary strings of length $n$ with $k$ ones. Then, $S = S_0 \union S_1 \union S_2 \union \dots \union S_n$ is a disjoint union (each string has $0,1, \dots , n$ ones) and $S_i \intersect S_j = \O where i \neq j$. W know that $|S_k| = \binom nk$ ($n$ bits, choose $k$ to be $1$) so, $|S| = |S_0| + |S_1| + \dots + |S_n| = \sum_{k=0}^{n} |S_k| = \sum_{k=0}^{n} \binom nk = 2^n$
+
+In general, given $S$, count $|S|$ in $2$ different ways. $|S|$ is fixed so the two ways must be equal.
+
+\subsection{Pascal's Triangle}
+%\begin{figure}[H]
+%	\label{fig:pascals triangle}
+%	\begin{verbatim}
+%	n=0	   1	
+%	n=1	  1 1
+%	n=2	 1 2 1  
+%	n=3	1 3 3 1
+%	\end{verbatim}
+%\end{figure}
+
+Identity: $\binom nk = \binom {n-1}{k} + \binom {n-1}{k-1}, 1 \le k \le n-1$
+
+\textbf{Combinatorial Proof\\}
+Let $S$ be the set of all subsets of \setn of size $k$. Then $|S| = \binom nk$. Partition $S$ into $2$ sets, $S_1, S_2$ where $S_1$ is the set of all subsets of \setn of size $k$ that include element $n$. $S_2$ is the set of all subsets of \setn of size $k$ that \emph{do not} include element $n$.
+
+For example, suppose $n=5, k=3$. $S= $ subsets of $\{1,2,3,4,5\}$ of size $3$.
+$$S_1 = \{\{1,2,5\}, \{1,3,5\}, \{1,4,5\}, \{2,3,5\}, \{2,5,5\}, \{3,4,5\}\}$$
+$$S_2 = \{\{1,2,3\}, \{1,3,4\}, \{1,2,4\}, \{2,3,4\}\}$$
+
+Then $S= S_1 \union S_2$ is a disjoint union and $|S| = |S_1| + |S_2|$.
+
+Each element of $S_1$ consists of $n$ with a subset of \oto{n-1} of size $k-1$ ($n$ is chosen already and cannot be chosen again therefore, choose the rest of the elements ($k-1$) from the remaining elements $|[n-1]| = n-1$) so $|S_1| = \binom {n-1}{k-1}$.
+
+Each element of $S_2$ is a subset of \oto{n-1} (because it can't contain $n$) of size $k$ (no elements have been chosen so far). So $|S_2| = \binom {n-1}k \Rightarrow \binom nk = \binom {n-1}k + \binom {n-1}{k-1}$
+
+
+\lecture{11-05-2015}
+
+\subsection{Combinatorial Proofs}
+Recall that $\binom nk = \binom {n-1}k + \binom {n-1}{n-k}$. Note the similarity between Pascal's Triangle and 
+
+\begin{align*}
+	\binom 71 & = \binom 62 + \binom 62 \\
+	& = \binom 63 + \binom 53 + \binom 54 \\
+	& = \binom 63 + \binom 53 + \binom 43 + \binom 44 \\
+	& = \binom 63 + \binom 53 + \binom 43 + \binom 33	
+\end{align*}
+
+\begin{ident}
+	$\binom {n+k}n = \sum_{i=0}^{k}\binom {n+i-1}{n-1}$
+\end{ident}
+
+\textbf{Combinatorial Proof}
+Let $S$ be the set of all subsets of \oto{n+k} of size $n$. So $|S| = \binom {n+k-1}{n-1}$.
+
+\textbf{Aside\\} %TODO turn into environment
+Remember that $\binom {n+k}n = \binom {n+k-1}n + \binom {n+k-1}{n-1}$. Thus, $\binom {n+k-1}n = \binom {n+k-1}n + \binom{n+k-2}{n-1}$.
+
+For $i=0, \dots , k$, let $S_i$ be all subsets of \oto{n+k} of size $n$ whose largest element is $n+i$. Then, each element of $S_i$ consists of $n+i$ together with $n-1$ other terms. Thus, $|S_i| = \binom {n+i-1}{n-1}$. $S_0 \union S_1 \union \dots \union S_n$ is a disjoint union so $|S| = \sum_{i=0}^{k}|S_i|$. The identity holds.
+
+This is colloquially known as the hockey stick identity.
+
+\section{Generating Series}
+\example
+How many subsets of \oto{3} have size $k$?
+
+Let $S$ be all subsets of \oto{3}.\\
+Give each element $\sigma$ of $S$ a weight $w$ where $w(\sigma) = |\sigma|$ (related to the counting problem).
+\\
+The problem now becomes ``How many elements of $S$ have weight $k$?"
+
+
+\begin{tabular}{|c|c|c|}
+	\hline $\sigma \in S$ & $w(\sigma)$ & $x^{w(\sigma)}$ \\ 
+	\hline $\O$ & $0$ & $1$ \\ 
+	\hline $\{1\}$ & $1$ & $x$ \\ 
+	\hline $\{2\}$ & $1$ & $x$ \\ 
+	\hline $\{3\}$ & $1$ & $x$ \\ 
+	\hline $\{1,2\}$ & $2$ & $x^2$ \\ 
+	\hline $\{1,3\}$ & $2$ & $x^2$ \\ 
+	\hline $\{2,3\}$ & $2$ & $x^2$ \\ 
+	\hline $\{1,2,3\}$ & $3$ & $x^3$ \\ 
+	\hline 
+\end{tabular}
+
+For each element $\sigma$, contribute $x^{w(\sigma)}$ to the generating series of $S$. Sum them up. In this example, the generating series for $S$ is $\Phi_S(x)=1+3x+3x^2+x^3$ The coefficient of $x^k$ records the answer to the counting problem. $\Phi(x)$ simplifies to $(q+x)^3$.
+
+\begin{defn}
+	Given set $S$ where each element is given a non-negative integer weight $w(\sigma)$ the \textbf{generating series} for $S$ with respect to $w$ is $\Phi_S(x) = \sum_{\sigma \in S}x^{w(\sigma)}$. In other words let $a_k$ be the number of elements in $S$ of the weight $k$ then $\Phi_S(x)=\sum_{k \ge 0}^{a_kx^k}$
+\end{defn}
+
+\example
+
+How many subsets of \setn have size $k$?
+
+Let $S$ be all subsets of \setn.\\
+For any $\sigma \in S$, define $w(\sigma) = |\sigma|$. The number of elements in $S$ with weight $k$ is $\Phi_S(x)=\sum_{k=0}^{n}\binom nk x^k = (1+x)^n$. The answer is the coefficient of $x^k$ in $(1+x)^n$.
+
+\example
+
+How many ways can you throw two 6-sided dice to get a sum of $k$?
+
+Let $S = [6] \times [6]$\\
+For each element $(a,b) \in S$, define $w(a,b) = a+b$.\\
+$\Phi_S(x)=\sum_{(a,b) \in S}x^{a+b}$ The coefficient of $x^k$ is the number of ways to get a sum of $k$.
+$$\Phi_S(x) = x^2 + 2x^3 + 3x^4 + 4x^5 + 5x^6 + 6x^7 + 5x^8 + 4x^9 + 3x^10 + 2x^11 + x^12$$
+$$= (x + x^2 + x^3 + x^4 + x^5 + x^6)^2$$
+
+\tutorial{12-05-2015}
+Remember:
+\begin{itemize}
+	\item $\binom nk = \frac{n!}{k!(n-k)!}$ - The number of ways that $k$ elements can be chosen from a set of size $n$.
+	\item $n!$ - The number of ways $n$ objects can be arranged.
+	\item $2^n$ - The number of subsets of a set of cardinality $n$ / The number of binary strings of length $n$.
+\end{itemize} 
+
+\textbf{Problem 1}\\
+Given $0 \le r \le k \le n$ how many subsets of \setn have exactly $r$ elements in common with \oto{k}? Every considered set is of the form $R \union S$ where $R \subset [k], |R| = r$, and $S \subset \{k+1, \dots , n\}$.
+
+The number of ways to construct $R$ is $\binom kr$ and the number of ways to construct $S$ is $2^{n-k}$
+
+Thus, the answer is $\binom kr 2^{n-k}$
+
+\textbf{Problem 3}\\
+ For integers $0 \le r \le k \le n$ give a combinatorial proof of the following identity: $$\binom nk \binom kr = \binom nr \binom {n-r}{k-r}$$
+ 
+ $S = \{(x,y) | x \subset y \subset [n], |y| = k, |x| = r \}$
+ 
+ Let's count $S$ in two different ways.
+ \begin{enumerate}
+ 	\item Find all possible $y$s and then construct $x \subset y$.
+	 	The number of possible $y$s is $\binom nk$
+	 	
+	 	Once $y$ is fixed, how many $x \subset y$ have $|X| = r$? $\binom kr$
+	 	
+	 	Thus, the total is $\binom nk \binom kr$
+	 	
+	 \item Find all possible $x \subset [n]$ of size $r$: $\binom nr$
+	 
+		 Then, find all $y$s so that $y \subset [n], x \subset y$ and $|y| = k$.
+		 
+		 There are $n-r$ elements remaining, $k-r$ remaining to be chosen: $\binom {n-r}{k-r}$
+		 
+		 Thus, the total is $\binom nr \binom {n-r}{k-r}$
+ \end{enumerate}
+ 
+ Therefore, $|S| = \binom nk \binom kr = \binom nr \binom {n-r}{k-r}$.
+ 
+ 
+\textbf{Problem 2}\\
+Define 2 sets
+$$E_n = \{\text{subsets of } [n] \text{with even cardinality} \}$$
+$$O_n = \{\text{subsets of } [n] \text{with odd cardinality} \}$$
+
+For example, 
+$$E_3 = \{\O, \{1,2\}, \{1,3\}, \{2,3\} \}$$
+$$O_3 = \{\{1,2,3\}, \{1\}, \{2\}, \{3\} \}$$
+
+\begin{enumerate}[a)]	
+	\item Find a bijection betweeen $E_n$ and $O_n$
+	
+		\func{E_n}{O_n}
+		
+		$f(S) = 
+		\piecewise{$S + \{n\} $}
+		{$n \not\in S$}
+		{$S \textbackslash \{n\} $}
+		{$n \in S$}$
+		
+		$f(S)$ is in $O_n$ because $|f(s)| = |S|+1$ if $S$ is even.
+		
+		\func[f^{-1}]{O_n}{E_n}\\
+		$f^{-1}(S) = f(S)$\\
+		$f$ is its own inverse.
+		
+	\item Determine $|E_n|, |O_n|$.
+	
+		We know that $|E_n| = |O_n|$ and that $E_n \union O_n = S$. Thus, $|E_n| = \frac{|\text{subsets of } [n]|}{2} = \frac{2^n}{2} = 2^{n-1}$
+	
+	\item Using the bijection, show $$\sum_{k=0}^{n}(-1)^k \binom nk = 0$$
+	
+	$|E_n| = |O_n| = \sum_{k \text{is even} 0 \le k \le n} \binom nk$ thus, identity holds.
+		
+		
+						
+		
+\end{enumerate}
+ 
+\lecture{13-05-2015}
+Recall set $S$, weight $w$. $\Phi_S(x) = \sum_{\sigma \in S}x^{w(\sigma)} = \sum_{k \geq 0} a_kx^k$ where $a_k$ is the number of things in $S$ with weight $k$.
+
+\example
+How many ways can we throw $2$ $\infty$-sided dice to get a sum of $k$?
+
+$(a,b) \in \mathbb{N} \times \mathbb{N}$, Let $S = \mathbb{N} \times \mathbb{N}$ and define $w(a,b) = a + b$. The coefficient of $x^k$ in $\Phi_S(x)$ is $k-1$ so $\Phi_S(x) = x^2 + 2x^3 + 3x^4 + \dots = \sum_{k = 2} (k-1)x^k = \frac{x^2}{(1-x)^2}$ (we will learn te last one later)
+
+\subsection{Notes on Generating Series}
+\begin{enumerate}
+	\item General steps: given a counting problem
+		\subitem Define a set of objects $S$ related to the problem
+		\subitem Define a weight function $W$ related to the problem
+		\subitem Find a generating series of $S$ with respect to $w$: $\Phi_S(x)$
+		\subitem The answer is in some coefficient of $\Phi_S(x)$
+	\item $x$ is a literal, we do not assign $x$ a value. The coefficient of $x^k$ keeps track of answers to counting problems
+	\item Later problems involve finding generating series first, then possibly finding the coefficient. Ex. How many binary strings of length $n$ have no $3$ consecutive $1$'s? The answer is the coefficient of $x^n$ in $\frac{1+x+x^2}{1-x-x^2-x^3}$
+\end{enumerate}
+
+\section{Formal Power Series}
+\begin{defn}
+	Let $(a_0, a_1,a_2, \dots)$ be a sequence of numbers. The \textbf{formal power series} associated with $\{a_n\}_{n \geq 0}$ is $A(x) = a_0 + a_1x + a_2x^2 = \sum_{k \geq 0} a_kx^k$
+	
+\end{defn}
+
+We say $a_k$ is the coefficient of $x^k$, denoted $[x^n]A(x)$. E.g. $A(x) = 1 + 3x+5x^2$ then $[x^2]A(x)=5, [x^0]A(x) = 1$
+
+Let $A(x)  = \sum_{k\geq 0} a_kx^k$ and $B(x) = \sum_{k \geq 0} b_kx^k$. $A(x) = B(x)$ iff $[x^k]A(x) = [x^k]B(x) \forall k \geq 0$
+
+\subsection{Operations}
+
+\subsubsection{Addition}
+$A(x) + B(x) = \sum_{k \geq 0} (a_k + b_k)x^k$ \\
+$[x^k](A(x) + B(x)) = [x^k]A(x) + [x^k]B(x)$
+
+\subsubsection{Multiplication}
+\example
+$(1+2x+3x^2)(1=3x+5x^2)$\\
+The coefficient of $x^2$ comes from $1 \times 5x^2, 2x(-3x), 3x^2 \times 1 = 5x^2 - 6x^2 - 3x^2 = 2x^2$
+
+In general, 
+\begin{align*}
+	A(x)B(x) &= (\sum_{i \geq 0} a_ix^i)(\sum_{j \geq 0} b_jx^j)\\
+	& = \sum_{n \geq 0} (a_0b_n + a_1b_{n-1} + \dots + a_nb_0)x^n\\
+	& = \sum_{n \geq 0}(\sum_{i = 0}^{n}a_ib_{n-i})x^n\\
+	& = \sum_{i \geq 0} \sum_{j \geq 0} a_ib_jx^{i+j}
+\end{align*}
+
+The coefficient of $x^n$ occurs when $i+j = n$. $i = 0..n, j = n - i$ thus the above simplifies to $$\sum_{n \geq 0}(\sum_{i = 0}^{n}a_ib_{n-i})x^n$$
+
+A useful tool to use is: 
+
+\begin{displaymath}
+	[x^n]x^kA(x) = \left\{
+	\begin{array}{lr}
+		[x^{n-k}]A(x) & n \ge k\\
+		0 & n \le k
+	\end{array}
+	\right.
+\end{displaymath}
+
+For example, $A(x) = 1 + 2x + 3x^2$. $[x^5]x^4A(x) = [x^5]x^4+2x^5+3x^6 = 2 = [x^1]A(x)$
+
+\example
+Let $A(x) = \sum_{i \geq 0} x^i, B(x) = \sum_{j \geq 0}(j+1)x^j$
+
+\begin{align*}
+[x^n]A(x)B(x) &= 1(n+1) + 1(n) + 1(n-1) + \dots + 1(1)\\
+& = (n+1) + n + (n-1) + \dots + 1\\
+& = \frac{(n+1)(n+2)}{2}\\
+& = \sum_{i=0}^{n}[x^n]A(x)[x^{n-i}]B(x)\\
+& = 1 \times (n - i + 1)\\
+& = \frac{(n+1)(n+2)}{2}
+\end{align*}
+
+\lecture{15-05-2015}
+Recall
+$$A(x)B(x) = \sum_{n \geq 0}(\sum_{i = 0}^{n}[x^i]A(x)[n^{n-i}]B(x))x^n$$
+
+\begin{displaymath}
+	[x^n]x^kA(x) = \left\{
+	\begin{array}{lr}
+		[x^{n-k}] & k \le n\\
+		0 & k > n
+	\end{array}
+	\right.
+\end{displaymath}
+
+
+\example
+$A(x) = (1+2x)^2, B(x) = 1 + 2x + 4x^2 + 8x^3 + \dots = \sum_{i \geq 0}2^ix^i$\\
+
+\begin{align*}
+[x^n]A(x)B(x) &= [x^n](1+4x+4x^2)B(x)\\
+			  & = [x^n]B(x) + [x^n]4xB(x) + [x^n]4x^2B(x)\\
+			  & = 2^n + 4[x^{n-1}]B(x) + 4[x^{n-2}]B(x)\\
+			  & = 2^n + 4 \times 2^{-1} + 4 \times 2^{n-2}\\
+			  & = 4 \times 2^n\\
+			  & = 2^{n+2}
+\end{align*}
+
+This works for $n \ge 2$, for $n=0,1$, we have $1+6x$ (do them separately) so $A(x)B(x) = 1 + 6x + \sum_{n \ge 2}2^{n+2}x^n$
+
+\subsection{Inverses}
+We can't divide power series so we multiply by the inverse instead.
+
+\begin{defn}
+	The \textbf{inverse} of the power series of $A(x)$ is a power series $B(x)$ such that $A(x)B(x) = 1$
+\end{defn}
+
+Let $B(x)$ be the inverse of $1-x$ and let $B(x)$ be $\sum_{i \geq 0} b_ix^i$. We want to define $B(x)$ such that $B(x)(1-x)=1$.
+
+\begin{align*}
+	1 & = B(x)(1-x)\\
+	  & = B(x) - xB(x)\\
+	  & = b_0 + b_1x + b_2x^2 + \dots \\
+	  &  \qquad -b_0x - b_1x^2 - b_2x^3 - \dots \\
+	  & = b_0 + (b_1 - b_0)x + (b_2 - b_1)x^2 + \dots 
+\end{align*}
+
+This equals $1$. By comparing coefficients, we get $b_0 = 1, b_1 - b_0 = 0, b_2 - b_1 = 0, \dots \Rightarrow b_1 = 1, b_2 = 1, \dots$
+
+So, the inverse of $1-x$, $B(x) = 1 + x + x^2 + \dots = \sum_{i \ge 0} x^i = \frac{1}{1-x}$
+
+\example
+Let $C(x)$ be th inverse of $x$ and let $C(x) = \sum_{i \ge 0}c_ix^i$. We want to find that $C(x)x = 1$
+
+We get $1 = c_0x + c_1x^2$. This is impossible because there is no constant term on the Right-Hand-Side. Therefore, $x$ does not have an inverse. (Never do $\frac{1}{x}$). If the power series has a constant term of $0$, there is no inverse. 
+
+\begin{thm}
+$A(x)$ has an inverse if and only if the constant term of $A(x)$ is NOT zero.
+\end{thm}
+
+\subsection{Common Series}
+\begin{enumerate}
+	\item $\frac{1}{1-x} = \sum_{i \ge 0} x^i \leftarrow$ Geometric Series
+	\item $\frac{1-x^{k+1}}{1-x} = \sum_{i = 0}^{k}x^i$
+	\item $\frac{1}{(1-x)^k} = \sum_{n \ge 0} \binom{n+k-1}{k-1}x^n$
+\end{enumerate}
+
+\subsection{Compositions}
+Let $G(x) = \frac{1}{1-x}$. Consider $G(3x^2) = 1 + 3x^2 + 9x^4 + 27x^6 + \dots = \sum_{i \ge 0}(3x^2)^i$. $G(3x^2) = \frac{1}{1-3x^2}$.
+
+\begin{displaymath}
+	[x^n]\frac{1}{1-3x^2} = \left\{
+	\begin{array}{lr}
+	3^{n/2} & \text{n is even}\\
+	0 & \text{n is odd}
+	\end{array}
+	\right.
+\end{displaymath}
+
+Let $A(x) = G(3x^2)^9 = \frac{1}{(1-3x^2)^9}$\\
+$= \sum_{n \ge 0} \binom {n+9-1}{n-1}(3x^2)^n$ (3. from common series above with $k=9, x \rightarrow 3x^2$)\\
+$= \sum_{n \ge 0} \binom {n+8}8 3^{50}$
+
+$[x^{100}]A(x) = \binom {58}8 3^{50}$
+
+Let $B(x) = G(1+x^2) = 1 + (1+x^2) + (1+x^2)^2$. Every term has a constant so the constant term is $\infty$ (not a number). Therefore, this is not a power series.
+
+In general, if $A(x), B(x)$ are power series where the constant term of $B(x)$ is $0$, then $A(B(x))$ is always a power series.
+
+\tutorial{19-05-2015}
+\textbf{Problem 1}
+Let $S_n$ be the set of all binary strings of length $n$. or each string $\sigma$, we define its weight $w(\sigma)$ to be the number of times $11$ appears in the string, and let $\Phi_{s_n}(x)$ be the generating series of $S_n$ with respect to $w$. For example, $w(1011) = 1, w(1111) = 3$.
+
+\begin{enumerate}[a)]
+	\item Determine $\Phi_{S_4}(x)$
+	
+	\begin{tabular}{cc}
+		$\sigma$ & $w(\sigma)$ \\ \hline
+		$0000$ & $0$  \\ 
+		$0001$ & $0$ \\ 
+		$0010$ & $0$  \\ 
+		$0011$ & $1$  \\ 
+		$0100$ & $0$  \\ 
+		$0101$ & $0$  \\ 
+		$0110$ & $1$  \\ 
+		$0111$ & $2$	
+		
+	\end{tabular}
+	\quad
+	\begin{tabular}{cc}
+		$\sigma$ & $w(\sigma)$ \\ \hline
+		$1000$ & $0$  \\ 
+		$1001$ & $0$  \\ 
+		$1010$ & $0$  \\ 
+		$1011$ & $1$  \\ 
+		$1100$ & $1$  \\ 
+		$1101$ & $1$  \\ 
+		$1110$ & $2$  \\ 
+		$1111$ & $3$
+	\end{tabular}
+	
+	$$\Phi_{S_4} = \sum_{\sigma \in S_4}x^{w(\sigma)} = 8 + 5x + 2x^2 + x^3$$
+	
+	\item Define $w^*$ to be the weight function where $w(\sigma)$ is the number of times 00 appears in the string, and let $\Phi_{S_n}^*(x)$  be the generating series of $S_n$ with respect to $w^*$. Prove that $\Phi_{S_n}(x) = \Phi_{S_n}^*(x) \forall n$
+	
+	Define \func{S_n}{S_n} as $f(x_1x_2x_3 \dots x_n) = (1-x_n)(1-x_2) \dots (1-x_n)$. Notice that $f$ is a bijection and is a permutation of $S_n$. $w(\sigma) = w^*(f(x)) \forall \sigma \in S_n$
+	
+	\begin{eqnarray*}
+		\Phi_{S_n}^*(x) & = & \sum_{\sigma \in S_n}x^{w(\sigma)} \\
+		& = & \sum_{\sigma \in S_n}x^{w(f(\sigma))} \\
+		& = & \sum_{\sigma^\prime \in S_n}x^{w^*(\sigma^\prime)} \\
+		& = & \Phi_{S_n}^*(x)
+	\end{eqnarray*}
+		
+\end{enumerate}
+
+\textbf{Problem 2}
+Define $f(x) = \sum_{i \ge 0}x^i$ and $g(x) = \sum_{i \ge 0} (-x)^i$. Find $[x^{2015}]f(x)^2$ and $[x^{2015}]f(x)g(x)$.
+
+$g(x) = \frac{1}{1 + x}$ and $f(x) = \frac{1}{1-x}$. 
+
+$f(x)^2 = \frac{1}{(1-x)^2} = \sum_{n \ge 0} \binom {n+1}1 x^2 = \sum_{n \ge 0} (n+1)x^2$\\
+$f(x)g(x) = \frac{1}{(1-x)(1+x)} = \frac{1}{1 - x^2} = \sum_{i \ge 0}(x^2)^i = \sum_{i \ge 0} x ^{2i}$
+
+$[x^{2015}]f(x)^2 = 2015 + 1 = 2016, [x^{2015}]f(x)g(x) = 0$
+
+
+\textbf{Problem 3}
+Prove the distributive property of power series: If $A(x), B(x), C(x)$ are formal power series, then $A(x)(B(x) + C(x)) = A(x)B(x) + A(x)C(x)$.
+
+By the theorem of uniqueness of power series representations, we only need to prove this in terms of coefficients (two power eries are equal if $\forall n \in \mathbb{N}, [x^n]A(x) = [x^n]B(x)$).
+
+\begin{eqnarray*}
+	& &[x^n]A(x)(B(x) + C(x))\\
+	& = & \sum_{i = 0}^{n} [x^n]A(x)[x^{n-i}](B(x) + C(x))\\
+	& = & \sum_{i = 0}^{n} [x^n]A(x)([x^{n-i}]B(x) + [x^{n-i}]C(x))\\
+	& = & \sum_{i = 0}^{n} [x^n]A(x)[x^{n-i}]B(x) + [x^n]A(x)[x^{n-i}]C(x)\\
+	& = & \sum_{i = 0}^{n} [x^n]A(x)[x^{n-i}]B(x) + \sum_{i = 0}^{n} [x^n]A(x)[x^{n-i}]C(x)\\
+	& = & [x^n]A(x)B(x) + [x^n]A(x)C(x) \\
+	& = & [x^n](A(x)B(x0 + A(x)C(x))
+\end{eqnarray*}
+
+\textbf{Problem 4}
+Determine a simplified rational expression for the following power series, or explain why it is not a power series.
+
+\begin{enumerate}[a)]
+	\item $f(x0 = \sum_{n = 0}^{141} (-3x)^n)$
+		$$= \sum_{i = 0}^{\infty} (-3x)^i - \sum_{i = 142}^{\infty} (-3x)^i = \frac{1 - 3^{142}x^{142}}{1 + 3x}$$
+	
+	\item $g(x) = \sum_{n = 1}^{\infty} (\frac{x}{1-x^2})^n$
+	
+		Define $h(x) = \sum_{i = 1}^{\infty}x^i$. Notice that $g(x) = g(\frac{x}{1-x^2})$. This power series composition is well-defined because the constant term is zero. $[x^0]\frac{x}{1-x^2} = 0$
+		
+		\begin{eqnarray*}
+			g(x) & = & \sum_{i = 1}^{\infty} (\frac{x}{1-x^2})^i \\
+			& = & (\frac{x}{1 - x^2}) \sum_{i = 0}^{\infty}(\frac{1}{1-x^2})^i\\
+			& = & (\frac{x}{1 - x^2}) \left(\frac{1}{1 - \frac{x}{1 - x^2}} \right)\\
+			& = & \frac{x}{1 - x - x^2}
+		\end{eqnarray*}
+		
+	\item $g(f(x))$ is not defined because $g$ has some power series representation of the constant term of $f(x)$ is non-zero.
+\end{enumerate}
+
+\textbf{Problem 5}
+Determine $[x^{11}]x^2(1-x^3)^{-5}(1-3x^2)^{-1}$
+
+\begin{eqnarray*}
+	\frac{1}{(1-x^3)^5} &=& \sum_{n \ge 0} \binom {n + 4}4 x^{3n}\\
+	\frac{1}{1 - 3x^2} & = & \sum_{i \ge 0} 3^ix^{2i}
+\end{eqnarray*}
+
+We set $x^{11}$ from this product whenever we choose $n,m \in \mathbb{N}$ such that $x^{2 + 3n+2i} = x^{11}$ if and only if $2+3n+2i=11 \rightarrow 3n+2i = 9$ This is satisfied when $n=3, i = 0$ and when $n=1,i=3$. Thus, the coefficient of $x^{11}$ is $\binom 74 + \binom 54 3^3$.
+
+\lecture{20-05-2015}
+\subsection{Power Series}
+Let $A(x) = \sum_{n \ge 0}a_nx^n$ where $A(x) = \frac{1+2x}{1-5x+6x^2}$. Multiply both sides by the denominator.
+$$(1-5x+6x^2)A(x) = 1-2x$$
+
+\begin{eqnarray*}
+	LHS &=& (1-5x+6x^2)(a_0 + a_1x + a_2x^2 + \dots ) \\
+	&=& a_0 + a_1x + a_2x^2 + \dots \\
+	& -5a_0x - 5a_1x^2 -5a_2x^3 - \dots \\
+	& \qquad + 6a+0x^2 + 6a_1x^3 + \dots \\
+	&=& a_0 + (a_1-5a_0)x + \sum_{n \ge 0}(a_n - 5a_{n-1} + 6a_{n-2})x^n
+\end{eqnarray*}
+
+This equals $RHS = 1 + 2x$. By comparing coefficients $a_0 = 1, a_1 = 7$ (initial condition). $a_n - 5a_{n-1}+6a_{n-2} = 0, \forall n \ge 2$ (recurrence because $i+n$ term can be found from preceeding term). $a_n = 5a_{n-1} - 6a_{n-2}$ (note these are the coefficients of the denominator)
+
+\begin{eqnarray*}
+	a_2 &=& 5a_1 - 6a_0 = 29 \\
+	a_3 &=&  5a_2 - 6a_1 = 103 \\
+	a_4 &=&  5a_3 - 6a_2 = 341
+\end{eqnarray*}
+
+$A(x) = 1 + 7x + 29x^2 + 103x^3 + 341x^4 + \dots$
+
+In general, if $A(x) = \frac{P(x)}{Q(x)}$ where $Q(x) = 1 + q_1x + x_2x^2 + \dots + q_k x^k$. Then $a_n = q_1 a_{n-1} + q_2a_{n-2} + \dots + q_ka_{n-k}=0$ for $n \ge max(k,deg(P(x)) + 1)$.
+
+\subsection{Sum and Product Lemmas}
+Recall from the generating series: we have a set $S$ and a weight function $w$. The generating series is $\Phi_S(x) = \sum_{\sigma \in S}x^{w(\sigma)} = \sum_{n \ge 0}a_nx^n$ where $a_n$ is the number of things in $S$ with weight $n$.
+
+\subsubsection{Sum Lemma}
+Let $S = A \cup B$ where $A \cap B = \emptyset$ (disjoint union) and let $w$ be a weight function of $S$. Then $\Phi_S(x) = \Phi_A(x) + \Phi_B(x)$.
+
+Proof\\
+\begin{eqnarray*} 
+	\Phi_S(x) &=& \sum_{\sigma \in S}x^{w(\sigma)}\\
+	&=& \sum_{\sigma \in A}x^{w(\sigma)} + \sum_{\sigma \in B}x^{w(\sigma)}\\
+	&=& \Phi_A(x) + \Phi_B(x)
+\end{eqnarray*}
+
+\example
+$\mathbb{N}_0 = \{0,1,2,3, \dots \}$. Define $w(a) = a$, $\Phi_{\mathbb{N}_0}(x) =1 + x + x^2 + x^3 + \dots = \frac{1}{1-x}$
+
+Partition $\mathbb{N}_0 = E \cup O$ where $E$ is the set of all even integers in $\mathbb{N}_0$ and $O$ is the set of all odd integers in $\mathbb{N}_0$.
+
+\begin{eqnarray*}
+	E &=& \{0,2,4,6, \dots \} \\
+	\Phi_E(x) = 1 + x^2 + x^4 + x^6 + \dots \\
+	O &=&  \{ 1, 3,5,7, \dots \} \\
+	\Phi_O(x) = x + x^3 + x^5 + x^7 = \frac{x}{1-x^2}	
+\end{eqnarray*}
+
+By the sum lemma, let $A,B$ be sets with weight function $\alpha, \beta$ respectiveley. Consider $A \times B$ with respect to the weight function $w(a,b) = \alpha (a) \beta (b)$. Then $\Phi_{A \times B}(x) = \Phi_A(x) \Phi_B(x)$
+
+\example
+$[6] \times [6]$ Let $w(a,b) = a+b = \alpha (a) + \beta (b)$. $\Phi_{[6]}(x) = x + 2x^2 + 3x^3 + \dots + 6x^6$. This is the same for both $[6]$.
+
+By the product lemma, $\Phi_{[6] \times [6]}(x) = \left( \Phi_{[6]}(x) \right)^2 = (x + 2x^2 + \dots + 6x^6)^2$
+$$(x+x^2+x^3+x^4+x^5+x^6)(x+x^2+x^3+x^4+x^5+x^6)$$
+
+\lecture{22-05-2015}
+
+Recall the product Lemma: Sets $A,B$ with weight functions $\alpha, \beta$ and set $A \times B$ with weight function $w(a,b) = \alpha(a) + \beta(b)$. Then $\Phi_{A \times B} (x) = \Phi_{A}(x) \Phi_{B}(x)$
+
+\textbf{Proof of Product Lemma}
+\begin{eqnarray*}
+	\Phi_A(x) \Phi_B(x) &=& \left( \sum_{a \in A} x^{\alpha (a)} \right) \left( \sum_{b \in B}x^{\beta (b)}\right) \\
+	&=& \sum_{a \in A}\sum_{b \in B} x^{\alpha(a)}x^{\beta(b)}\\
+	&=& \sum_{(a,b) \in A \times B} x^{w(a,b)}\\
+	&=& \Phi_{A \times B}(x)
+\end{eqnarray*}
+
+\example
+Let $\mathbb{N}= \{0,1,2, \dots \}$, $w(a) = a$. $\Phi_{\mathbb{N}} = 1 + x + x^2 + x^3 + \dots = \frac{1}{1-x}$
+
+$\frac{1}{(1-x)^k}$ is the generating series for $\mathbb{N}$ multiplied by itself $k$ times. $(\mathbb{N}^k)$ where $w(a_1, a_2, \dots, a_k) = a_1 + a_2 + \dots + a_k$ (by the product lemma).
+
+So $[x^n] \frac{1}{(1-x)^k}$ is the number of $k$-tuples $(a_1, \dots, a_k) \in \mathbb{N}^k$, where the sum is $n$ (i.e. $w(a_1, \dots, a_k) = n$). This is the same as the number of non-negative integer solutions to $a_1 + a_2 + \dots + a_k = n$.
+
+This is the same as $n$ objects, select $k$ ways to partition them. In general, any solution $(a_1, \dots, a_k)$ corresponds to an arrangement of $n$ $0$'s and $k-1$ $1$'s. Thus, there are $\binom {n + k -1}{k - 1}$ possibilities so $[x^n] \frac{1}{(1-x)^k} = \binom {n+k-1}{k-1}$.
+
+\example
+How many ways can $n$ identitcal pieces of sushi be eaten so Al eats at most $5$, Bob eats at least $3$, and Cam eats an even number?
+
+We can model the problem as $(a,b,c) \in A \times B \times C$.
+
+\begin{eqnarray*}
+	A &=& \{0, \dots , 5 \} \\
+	B &=& \{3,4, \dots \} \\
+	C &=& \{ 0,2,4, \dots \}
+\end{eqnarray*}
+
+Define $w(a,b,c) = a+b+c$. Using $\alpha(a) = a$ for all $A,B,C$ we can apply the product lemma.
+
+Then, 
+\begin{eqnarray*}
+	\Phi_{A}(x) &=&  1 + x + x^2 + x^3 + x^4 + x^5 = \frac{1-x^5}{1-x} \\
+	\Phi_{B}(x) &=& x^3 + x^4 + \dots = \frac{x^3}{1-x} \\
+	Phi_{C}(x) &=& 1 + x^2 + x^4 + \dots = \frac{1}{1-x^2}
+\end{eqnarray*}
+
+So $\Phi_{A \times B \times C}(x) = \Phi_A(x) \times \Phi_B(x) \times \Phi_C(x) = \frac{x^3(1-x^6)}{(1-x)^2(1-x^2)}$
+
+The number of ways is $[x^n]\Phi_{A \times B \times C}(x)$
+
+\subsection{Integer Compositions}
+
+\begin{defn}
+	A $k$-tuple $(a_1, \dots, a_k)$ of positive integers is a \textbf{composition} of $n$ if $n = a_1 + \dots + a_k$. Such a composition is said to have $k$ parts.
+\end{defn}
+
+\example
+Compositions of $5$ include $(1,3,1),(2,3),(1,1,1,2),(2,1,1,1),(5)$
+
+Notes
+\begin{enumerate}
+	\item Each part is at least $1$
+	\item Order of the parts matters
+	\item The number $0$ has $1$ composition which has $0$ parts $()$
+\end{enumerate}
+
+\example
+How many compositions of $n$ have $k$ parts?
+
+The set of all compositions of $k$ parts (disregarding $n$) is $\mathbb{N}^k$. One composition has the form $(a_1, \dots, a_k)$ where each $a_i \in \mathbb{N}$
+
+Define $w(a_1, \dots , a_k) = a_1 + \dots + a_k$. Use $w(a) = a$ for each $\mathbb{N}$. $\Phi_{\mathbb{N}(x)} = x + x^2 + x^3 + \dots = \frac{x}{1-x}$. By the product lemma, $\Phi_{\mathbb{N}^k}(x) = \left( \Phi_{\mathbb{N}}(x) \right)^k = \frac{x^k}{(1-x)^k}$
+
+\lecture{25-05-2015}
+$$[x^n] \left( \frac{x}{1-x} \right)^k = [x^{n-k}] \frac{1}{(1-x)^k} = \binom {(n-k) + k -1}{k-1} = \binom {n-1}{k-1}$$
+
+\textbf{Combinatorial Interpretation}
+If we have $n=7$ items, there are only $6$ places to divide them. Separators have to be between items and only one separator can be between two items. Thus, there are $n-1$ spots to put $k-1$ separators. i.e. $\binom {n-1}{k-1}$.
+
+\example
+How many compositions of $n$ have $2k$ parts where the first $k$ parts are at least $5$ and the last $k$ parts are multiples of $3$?
+
+Define
+\begin{eqnarray*}
+	A &=& \{ 5,6,7, \dots\} \\
+	B &=& \{3,6,9, \dots \}
+\end{eqnarray*}
+
+Remember that $0$ can't be part of a composition. $A^k \times B^k$ enumerates all compositions of the desired properties. $A^k \times B^k = \{\todots{a}{k},\todots{b}{k} | a_i \in A, b_i \in B\}$ Note that $|A^k \times B^k| = 2k$.
+
+We define $w(\todots{a}{k}, \todots{b}{k}) = \sumdots{a}{k} + \sumdots{b}{k}$
+
+Using $w(a) = a$ for $A,B$:
+\begin{eqnarray*}
+	\Phi_A(x) &=& x^5 + x^6 + x^7 + \dots = \frac{x^5}{1-x} \\
+	\Phi_B(x) &=& x^3 + x^6 + x^9 + \dots = \frac{x^3}{1-x^3}
+\end{eqnarray*}
+
+By the product lemma, 
+\begin{eqnarray*}
+	\Phi_{A^k \times B^k}(x) &=& \left( \Phi_A(x) \right)^k \left( \Phi_B(x) \right)^k \\
+	&=& \frac{x^{5k}}{(1-x)^k} \times \frac{x^{3k}}{(1-x^3)^k} \\
+	&=& \frac{x^{8k}}{(1-x)^k (1-x^3)^k}
+\end{eqnarray*}
+
+The answer is $[x^n] \frac{x^{8k}}{(1-x)^k (1-x^3)^k}$. The explicit formula is:
+
+\begin{eqnarray*}
+	[x^n] \frac{x^{8k}}{(1-x)^k (1-x^3)^k} &=& [x^{n-8k}]\frac{1}{(1-x)^k (1-x^3)^k} \\
+	&=& [x^{n-8k}] \left( \sum_{m \ge 0} \binom {m+k-1}{k-1}x^m \right) \left( \sum_{p \ge 0} \binom {p+k-1}{k-1}x^p \right) \\
+	&=& [x^{n-8k}] \sum_{m \ge 0} \sum_{p \ge 0} \binom {m+k-1}{k-1} \binom {p+k-1}{k-1} x^{m+3p} \\
+	&=& \sum_{ \{(m,p) \in \mathbb{N}_0 \times \mathbb{N}_0 | m+3p = n-8k\} } \binom {m+k-1}{k-1} \binom {p+k-1}{k-1}
+\end{eqnarray*}
+
+\textbf{General Method}
+How many compositions of $n$ have certain properties?
+\begin{enumerate}
+	\item Define a set $S$ of all compositions which satisfy these properties (disregard $n$ - that comes later)
+	\item Find the generating series (the weight function is the sum of all the parts)
+	\item The answer is $[x^n]\Phi_S(x)$
+\end{enumerate}
+
+\example
+How many compositions of $n$ are there? (the number of parts is not fixed)
+
+Partition the set of all compositions according to the number of parts. The set of compositions with $k$ parts is $\mathbb{N}^k$. The set of all compositions $S= \mathbb{N}^0 \cup \mathbb{N}^1 \cup \dots = \bigcup_{k \ge 0} \mathbb{N}^k$ This is a disjoint union, so we can use the sum lemma. The weight function of a composition is the sum of all parts.
+
+We have $\Phi_{\mathbb{N}^k}(x) = \left( \frac{x}{1-x} \right)^k$ (from eariler) so by the sum lemma, $\Phi_S(x) = \sum_{k \ge 0} \Phi_{\mathbb{N}^k}(x) = \sum_{k \ge 0} \left( \frac{x}{1-x} \right)^k$
+
+This is the power series composition of $\frac{1}{1-x}$ with $x$ replaced by $\frac{x}{1-x} = \frac{1}{1 - \frac{x}{1-x}}$. We can do this because the constant term of $\frac{x}{1-x}$ is zero. $$\frac{1}{1 - \frac{x}{1-x}} = \frac{1-x}{1-x-x} = \frac{1-x}{1-2x}$$
+
+The answer is 
+\begin{eqnarray*}
+	[x^n]\frac{1-x}{1-2x} &=& [x^n]\frac{1}{1-2x} - [x^n]\frac{x}{1-x}\\
+	&=& 2^n - [x^{n-1}]\frac{1}{1-2x} \\
+	&=& 2^{n-1} \qquad n \ge 1 \\ % supposed to be piecewise
+	& & 1 \qquad n=0
+\end{eqnarray*}
+
+
+\tutorial{26-05-2015}
+
+\textbf{Problem 1}\\
+Let $\{a_n\}$ be a subset whose corresponding power series $A(x) = \sum_{i \ge 0}a_ix^i$ satisfies $$A(x) = \frac{6 -x + 5x^2}{1-3x^2-2x^3}$$
+
+\begin{enumerate}[a)]
+	\item Determine a recurrence relation that $\{a_n\}$ satisfies, with sufficient initial conditions to uniquely specify $\{a_n\}$. Use this recurrence relation to find $a_5$.
+	
+	\begin{eqnarray*}
+		6 -x + 5x^2 &=& (1-3x^2-2x^3) \sum_{n \ge 0} a_nx^n \\
+		6 -x + 5x^2 &=& a_0 + a_1x + (a_2-3a_0)x^2 + \sum_{n \ge 3}(a_{n-1} - 3a_{n-2} - 2a_{n-3})x^n
+	\end{eqnarray*}
+	
+	Equate coefficients:
+	\begin{eqnarray*}
+		a_0 &=& 6 \\
+		a_1 &=& -1 \\
+		a_2 - 3a_0 &=& 5 \\
+		a_2 &=& 5 + 18 = 23 \\
+		a_n - 3a_{n-2} - 2a_{n-3} &=& 0
+	\end{eqnarray*}
+	
+	Taking $n=5, a_5 = 3a_3 + 2a_2$.
+	\begin{eqnarray*}
+		a_3 &=& 3a_1 + 2a_0 \\
+		a_5 &=& 9a_1 + 6a_0 + 2a_2 \\
+		&=& 73
+	\end{eqnarray*}
+	
+	\item The denominator of $A(x)$ can be factored into $(1-2x)(1+x)^2$. Using results from partial fractions, it can be shown that there exist constants $C_1, C_2, C_3$ such that $$A(x) = \frac{C_1}{1-2x} + \frac{C_2}{1+x} + \frac{C_3}{(1+x)^2}$$. Determine these three constants, and use this new expression for $A(x)$ to find a formula for $a_n$.
+	
+	\begin{eqnarray*}
+		A(x) &=& \frac{C_1}{1-2x} + \frac{C_2}{1+x} + \frac{C_3}{(1+x)^2} \\
+		&=& \frac{C_1(1+x)^2 + C_2(1-2x)(1+x) + C_3(1-2x)}{(1-2x)(1+x)^2}
+	\end{eqnarray*}
+	
+	Expand out as $$\frac{6 -x + 5x^2}{1-3x^2-2x^3} = \frac{(C_1+C_2+C_3) + (2C_1-C_2-2C_3)x + (C_1-2C_2)x^2}{(1-2x)(1+x)^2}$$
+	
+	Solving this system gives $C_1=3,C_2=-1,C_3=4$ so
+	\begin{eqnarray*}
+		A(x) &=& \frac{3}{1-2x} + \frac{-1}{1+x} + \frac{4}{(1+x)^2}\\
+		&=& 3 \sum_{n \ge 0}2^nx^n - \sum_{n \ge 0}(-1)^nx^n + 4 \sum_{n \ge 0} (-1)^n(n+1)x^n\\
+		&=& \sum_{n \ge 0} \left(3 \times 2^n + (4n+3)(-1)^n \right)x^n\\
+		&=& \sum_{n \ge 0} a_nx^n \\
+		a_n &=& 3 \times 2^n + (4n+3)(-1)^n\\
+		a_5 &=& 3(32) + (23)(-1) \\
+		&=& 73
+	\end{eqnarray*}
+	
+\end{enumerate}
+
+\textbf{Problem 2} \\
+
+Using the definition of $\binom nk = \frac{n(n-1) \dots (n-k+1)}{k!}$ for non-negative integers $k$ and rational numbers $n$, prove that $(1-x)^{-1} = \sum_{n \ge 0} \binom {n+k-1}{k-1}x^n$.
+
+By the binomial theorem, $[x^n](1-x)^{-k} = (-1)^n \binom {-k}n$.
+
+By definition, 
+\begin{eqnarray*}
+	\binom {-k}n &=& \frac{(-k)(-k-1) \dots (-k-n+1)}{n!} \\
+	&=& (-1)^n \frac{k(k+1) \dots (n+k-1)}{n!} \\
+	&=& (-1)^n \frac{(n+k-1)!}{n!(k-1)!} = (-1)^n \binom {n+k-1}{k-1}
+\end{eqnarray*}
+
+Then, 
+\begin{eqnarray*}
+	[x^n](1-x)^{-k} &=&  (-1)^n \binom {-k}{n} \\
+	&=&  (-1)^n(-1)^n \binom {n+k-1}{k-1} \\
+	&=& (-1)^{2n} \binom {n+k-1}{k-1}  \\
+	&=&  \left( (-1)^2 \right)^n   \binom {n+k-1}{k-1} \\
+	&=& \binom {n+k-1}{k-1} 
+\end{eqnarray*}
+
+\textbf{Problem 3}\\
+For a binary string $s$, define its weight $w(s)$ to be the number of $1$'s in the string plus the length of the string itself. For example, $w(110100001)=13$.
+
+\begin{enumerate}[a)]
+	\item Let $S_n$ be the set of all binary strings of length $n$. Use the product lemma to determine $\Phi_{S_n}(x)$.
+	
+	Define $\alpha : \{0,1\} \rightarrow \{1,2\}$. Observe that if $\sigma = \sigma_1 \sigma_2 \sigma_3 \dots \sigma_n \in S_n$ then $w(\sigma) = \sum_{i=1}^{n}\alpha (\sigma_i)$. Thus $S_n = \{0,1\}^n$ and so by the product lemma 
+	\begin{eqnarray*}
+		\Phi_{S_n}(x) &=& \Pi_{i=1}^n \Phi_{\{0,1\}}(x) \\
+		&=& \left( \Phi_{\{0,1 \}}(x) \right)^n \\
+		&=& (x+x^2)^n
+	\end{eqnarray*}
+	
+	\item Let $T$ be the set of all binary strings (regardless of length). Determine $\Phi_T(x)$.
+	
+	Observe that $S_i \cap S_j = \emptyset$ for $i \neq j$. Thus by the sum lemma, $\Phi_t(x) = \sum_{n \ge 0}\Phi_{S_n}(x) = \sum_{n \ge 0}(x+x^n)^n$
+	
+	The constant term of $x+x^2$ is zero (thus it is well-defined) so we can compose these power series.
+	$\Phi_T(x) = \frac{1}{1-(x+x^2)}$
+\end{enumerate}
+
+\textbf{Problem 4}\\
+Consider all integers between $0$ and $999,999$ (written in base $10$ without leading $0$'s). Let $k \in \mathbb{N}$. 
+\begin{enumerate}[a)]
+	\item How many of these integers have digits that sum to $k$?
+	
+	We can think of $S$ as $\{0, \dots, 9 \}^6$ by prepending leading zeros to the ``too short" integers (e.g. $1,234 \rightarrow 001,234$). Define a weight function $\alpha : \{0, \dots, 9\} \rightarrow \mathbb{N}$. Then if $\sigma \in S$, write $\sigma = \sigma_1 \sigma_2 \dots \sigma_6$ and note that $w(\sigma) = \sum_{i = 1}^6 \alpha(\sigma_i)$. By the product lemma, $\Phi_S(x) = \Pi_{i=1}^6 \Phi_{\{0, \dots, 9 \}}(x) = \left( \Phi_{\{0, \dots, 9 \}}(x)\right)^6$
+
+
+\item How many of these integers have digits that sum to $k$ with the property that the leftmost digit is the rightmost digit plus $1$?
+
+For each length $l$ between $2$ and $6$, the strings look like $\sigma_1, \sigma_2, \dots , \sigma_{l-1}, \sigma_1-1$ where $\sigma_1 \in \{1, \dots, 8\}, \sigma_2, \dots , \sigma_{l-1} \in \{1, \dots , 9\}$. For each $l$, find $T_l$ to be the set of all strings of length $l$ witht the desired property. Then $\Phi_{T_l}(x) = (x^3 + x^5 + \dots + x^{17})(1+x+x^2+ \dots + x^9)^{l-2}$. Then, 
+\begin{eqnarray*}
+	\Phi_{T}(x) &=& \sum_{l=2}^6 \Phi_{T_l}(x)\\
+	&=& \sum_{l=0}^4 x^3 \left( \frac{1-x^{16}}{1-x^2} \right) \left( \frac{1-x^{10}}{1-x} \right)^{l-2} 
+\end{eqnarray*}
+
+The number we are looking for is $[x^k]\Phi_T(x)$.
+
+\end{enumerate}
+
+\lecture{27-05-2015}
+Compositions of $n$ with any number of parts. Define $S= \bigcup_{k \ge 0}\mathbb{N}^k$. Then the generating series is $\Phi_S(x) = \sum_{k \ge 0}\Phi_{\mathbb{N^k}(x) = \sum_{k \ge 0}\left( \Phi_{\mathbb{N}}(x) \right )^k = \frac{1}{1-\frac{x}{1-x}} = \frac{1-x}{1-2x}$. $[x^n]\frac{1-x}{1-2x} = 2^{n-1} if n \ge 1, 1 if n=0$ %piecewise later
+
+Combinatorial interpretation using stars and bars: each bar must be between two stars, only one bar can go between two stars. There are $n-1$ spots for $1$'s. Each spot has $2$ choices, either there is a $1$ or not. Thus, $2^{n-1}$ in total.
+
+\example
+How many compositions of $n$ are there where each part is odd? (any number of parts) E.g. $n=5 \rightarrow (5), (3,1,1), (1,3,1), (1,1,3), (1,1,1,1,1)$. Define $\mathbb{N}_{odd} = \{1,3,5, \dots \}$ Let $S = \mathbb{N}_{odd}^0 \cup \mathbb{N}_{odd}^1 \cup \dots = \bigcup_{k \ge 0} \mathbb{N}_{odd}^k$.
+
+Define the weight function of a composition to be the sum of its parts.
+
+The generating series $\Phi_{\mathbb{N}_{odd}}(x) = x + x^3 + x^5 + \dots = \frac{x}{1-x^2}$
+$\Phi_{\mathbb{N}_{odd}^k}(x) = \left(\Phi_{\mathbb{N}_{odd}}(x)\right)^k = \frac{x}{1-x^2}^k$ by the product lemma.  
+By the sum lemma, $\Phi_S(x) = \sum_{k \ge 0} \Phi_{\mathbb{N_{odd}^k}(x)  = \sum_{k \ge 0}(\frac{x}{1-x^2})^k = \frac{1}{1-\frac{x}{1-x^2}} = \frac{1-x^2}{1-x-x^2}$
+
+The answer is $[x^n] \frac{1-x^2}{1-x-x^2}$
+
+Let $A(x) = \sum_{n \ge 0}a_nx^n = \frac{1-x^2}{1-x-x^2}$ $a_n - a_{n-1} - a_{n-2} = 0, a_0 = 1, a_1 = 1, a_2 = 1$ this can be rewritten as $a_n = a_{n-1} + a_{n-2}$ (fibonacci sequence)
+
+Let $S_n$ be the set of all compositions of $n$ where each part is odd. The recurrence implies that $|S_n| = |S_{n-1}| + |S_{n-2}|$ for $n \ge 3$. Find a bijection between $S_n$ and $S_{n-1} \cup S_{n-2}$.
+
+$S_5$ from above. $S_3 = (3), (1,1,1) \qquad S_4 = (3,1), (1,3), (1,1,1,1)$ Bijection: If the last part is $1$, remove it. If the last part is greater than $1$, subtract it by $2$.
+Define $f: S_n \Rightarrow S_{n-1} \cup S_{n-2}$ where fro each $(a_1, \dots, a_k) \in S_n f(a_1, \dots , a_k) = (a_1, \dots , a_{k-1}) if a_k = 1, (a_1, \dots, a_{k-1}-2) if a_k \ge 3$ %piecewise
+By removing an element, every part is still odd. By subtracting $2$ from an odd number we get another odd number. The inverese is $f^{-1}S_{n-1} \cup S_{n-2} \Rightarrow S_n$ where for each $(b_1, \dots , b_l) \in S_{n-1} \cup S_{n-2} f^{-1}(b_1, \dots, b_l) = (b_1, \dots, b_l, 1) if b_1 + \dots + b_l = n-1, (b_1, \dots, _{l-1}, b_l+2) if b_1 + \dots + b_l = n-2$ %piecewise
+
+Recursively build $S_n$ based on $S_{n-1}$ and $S_{n-2}$. Add $1$ part of $1$ to any $S_{n-1}$ and add $2$ to the last part of any $S_{n-2}$. (consider $S_6$)
+
+\subsection{Binary Strings}
+A binary string is a sequence of $0$'s and $1$'s
+
+\textbf{Terminology}
+\begin{itemize}
+	\item The length of a string is the total number of $0$'s and $1$'s
+	\item There is only one string of length $0$, the empty string (aka the null string) It is denoted as $\epsilon$
+	\item The concatenation of $a$ and $b$ is $ab$
+		If $a=001$ and $b=01$ then $ab=00101$
+	\item $b$ is a substring of $S$ if $S=abc$ for some strings $a,c$ (possibly $\epsilon$) (note tthat $\epsilon$ is a substring of everything including itself)
+	\item A block is a maximal non-empty substring of all $0$'s or all $1$'s.
+\end{itemize}
+
+\lecture{29-05-2015}
+\textbf{General Questions}\\
+How many binary strings of length $n$ have some property?\\
+Appproach:\\
+Let $S$ be the set of all strings with these properties. Define the weight function $w(\sigma)$ to be the length of $\sigma$. Find the generating series with respect to $w$. The answer will be $[x^n]\Phi_S(x)$ (i.e. the number of strings of weight $n$)
+
+\example
+\begin{eqnarray*}
+	S &=&  \{01, 001, 010, 01100 \} \\
+	len &=& 2 3 3 5 \\
+	\Phi_S(x) &=& x^2 + x^3 + x^3 + x^5\\
+	\\
+	T &=&  \{\epsilon, 0, 00, 000, 0000 \} \\
+	len &=& 0,1,2,3,4 \\
+	\Phi_T(x) &=& \frac{1}{1-x}
+\end{eqnarray*}
+
+Two Operations:
+\begin{enumerate}
+	\item Concatenation of sets of strings. If $A,B$ are sets of strings, $AB = \{ab | a \in A, b \in B \}$
+		\example
+		$$A = \{0,11\}, B=\{1,11\}, AB = \{01,011,111,1111 \}$$
+		This is ``like" the cartesian product (there are cases where it is not the same)
+		$$A^k = AA \dots A = \{a_1a_2 \dots a_k | a_i \in A \}$$ % figure out underbrace
+
+	\item Star operator: $$A^* = A^0 \cup A^1 \cup \dots = \bigcup_{n \ge 0}A^n$$
+		\example
+		$$\{0,1\}^*, 001101 \in $\{0,1\}^6$$
+		which in turn is in $\{0,1\}^*$. Any string of length $n$ is in $\{0,1\}^n \in \{0,1\}^*$ so $\{0,1\}^*$ includes all binary strings.
+
+		\example
+		\begin{enumerate}
+			\item $\{0\}\{00\}^*$ - all strings with an odd length containing only zeros.
+			\item $\{0,111\}^*$ - all strings where blocks of $1$'s have length divisible by $3$
+			\item $\{0\}^*(\{1\}\{0\}^*)^*$ - Take any string abd break it just before each $1$. We have a number of copies of $\{1\}\{0\}^*$ except $\{0\}^*$ at the beginning. This is the set of all binary strings.
+		\end{enumerate}
+		
+\end{enumerate}
+These are ``decompositions" of strings.
+
+\subsection{Generating Series on Strings}
+\example 
+$A =\{1,11\}, B=\{00,000\}, w(\sigma) = k | \simga = \sigma_1 \dots \sigma_k$ The generating series are: $\Phi_A(x) = x+x^2, \Phi_B(x) = x^2+x^3$. For $AB, w(aab) = w(a) + w(b)$
+
+Assuming concatenation works like the cartesian product, $\Phi_{AB}(x) = \Phi_A(x) \Phi_B(x) = (x+x^2)(x^2+x^3) = x^3 + 2x^4+x^5$ Then, $AB = \{100,1000,1100,11000\}$
+
+\example
+$$B = \{0,111\}^* = \bigcup_{k \ge 0}\{0,111\}^k$$
+$$\Phi_{\{0,111\^k}}(x) = \left( \Phi_{\{0,111\}}(x) \right)^k = (x+x^3)^k$$ 
+
+By the sum lemma, $\Phi_B(x) = \sum_{k \ge 0}\Phi_{\{0,111\}^k}(x) = \sum_{k \ge 0}(x+x^3)^k = \frac{1}{1-(x+x^3)}$ (geometric series with constant $0$). The number of strings in $B$ is $[x^n]\frac{1}{1-x-x^3}$
+
+\subsubsection{Unambiguity of Strings}
+\example
+
+$$A = \{1,11\}, B = \{1,11\}$$
+$$A \times B = \{(1,1), (1,11), (11,1), (11,11) \}$$
+$$AB = \{11,111,1111\}$$
+$$\Phi_{A \times B}(x) = x^2 + 2x^3 + x^4, \Phi_{AB}(x) = x^2 + x^3 + x^4$$
+
+\begin{defn}
+	$AB$ is \textbf{ambiguous} if $\exists$ distinct pairs $(a_1,b_1),(a_2,b_2) \in A \times B$ such that $a_1b_1 = a_2b_2$. Otherwise, $AB$ is \textbf{unambiguous}. In other wrods, each string is uniquely generated.
+\end{defn}
+
+When $AB$ is ambiguous, $\Phi_{A \times B}(x) \ne \Phi_{AB}(x)$. An ambiguous string appears in $A \times B$ multiple timesbut only one time in $AB$ ($\exists i | [x^i]\Phi_{A \times B}(x) > [x^i]\Phi_{AB}(x)$)
+
+When $AB$ is unambiguous, there is a natural bijection between $A \times B$ and $AB$ $( (a,b) \rightarrow ab )$ so then, $\Phi_{A \times B}(x) = \Phi_{AB}(x)$ and the product lemma applies.
+
+\end{document}
