@@ -947,7 +947,7 @@ The number we are looking for is $[x^k]\Phi_T(x)$.
 \end{enumerate}
 
 \lecture{27-05-2015}
-Compositions of $n$ with any number of parts. Define $S= \bigcup_{k \ge 0}\mathbb{N}^k$. Then the generating series is $\Phi_S(x) = \sum_{k \ge 0}\Phi_{\mathbb{N^k}(x) = \sum_{k \ge 0}\left( \Phi_{\mathbb{N}}(x) \right )^k = \frac{1}{1-\frac{x}{1-x}} = \frac{1-x}{1-2x}$. $[x^n]\frac{1-x}{1-2x} = 2^{n-1} if n \ge 1, 1 if n=0$ %piecewise later
+Compositions of $n$ with any number of parts. Define $S= \bigcup_{k \ge 0}\mathbb{N}^k$. Then the generating series is $\Phi_S(x) = \sum_{k \ge 0}\Phi_{\mathbb{N^k}}(x) = \sum_{k \ge 0}\left( \Phi_{\mathbb{N}}(x) \right )^k = \frac{1}{1-\frac{x}{1-x}} = \frac{1-x}{1-2x}$. $[x^n]\frac{1-x}{1-2x} = 2^{n-1} if n \ge 1, 1 if n=0$ %piecewise later
 
 Combinatorial interpretation using stars and bars: each bar must be between two stars, only one bar can go between two stars. There are $n-1$ spots for $1$'s. Each spot has $2$ choices, either there is a $1$ or not. Thus, $2^{n-1}$ in total.
 
@@ -958,7 +958,7 @@ Define the weight function of a composition to be the sum of its parts.
 
 The generating series $\Phi_{\mathbb{N}_{odd}}(x) = x + x^3 + x^5 + \dots = \frac{x}{1-x^2}$
 $\Phi_{\mathbb{N}_{odd}^k}(x) = \left(\Phi_{\mathbb{N}_{odd}}(x)\right)^k = \frac{x}{1-x^2}^k$ by the product lemma.  
-By the sum lemma, $\Phi_S(x) = \sum_{k \ge 0} \Phi_{\mathbb{N_{odd}^k}(x)  = \sum_{k \ge 0}(\frac{x}{1-x^2})^k = \frac{1}{1-\frac{x}{1-x^2}} = \frac{1-x^2}{1-x-x^2}$
+By the sum lemma, $\Phi_S(x) = \sum_{k \ge 0} \Phi_{\mathbb{N_{odd}^k}}(x)  = \sum_{k \ge 0}(\frac{x}{1-x^2})^k = \frac{1}{1-\frac{x}{1-x^2}} = \frac{1-x^2}{1-x-x^2}$
 
 The answer is $[x^n] \frac{1-x^2}{1-x-x^2}$
 
@@ -1012,7 +1012,7 @@ Two Operations:
 
 	\item Star operator: $$A^* = A^0 \cup A^1 \cup \dots = \bigcup_{n \ge 0}A^n$$
 		\example
-		$$\{0,1\}^*, 001101 \in $\{0,1\}^6$$
+		$$\{0,1\}^*, 001101 \in \{0,1\}^6$$
 		which in turn is in $\{0,1\}^*$. Any string of length $n$ is in $\{0,1\}^n \in \{0,1\}^*$ so $\{0,1\}^*$ includes all binary strings.
 
 		\example
@@ -1027,13 +1027,13 @@ These are ``decompositions" of strings.
 
 \subsection{Generating Series on Strings}
 \example 
-$A =\{1,11\}, B=\{00,000\}, w(\sigma) = k | \simga = \sigma_1 \dots \sigma_k$ The generating series are: $\Phi_A(x) = x+x^2, \Phi_B(x) = x^2+x^3$. For $AB, w(aab) = w(a) + w(b)$
+$A =\{ 1,11\} , B=\{ 00,000\} , w(\sigma ) = k | \sigma = \sigma_{1} \dots \sigma_{k}$ The generating series are: $\Phi_A(x) = x+x^2, \Phi_B(x) = x^2+x^3$. For $AB, w(aab) = w(a) + w(b)$
 
 Assuming concatenation works like the cartesian product, $\Phi_{AB}(x) = \Phi_A(x) \Phi_B(x) = (x+x^2)(x^2+x^3) = x^3 + 2x^4+x^5$ Then, $AB = \{100,1000,1100,11000\}$
 
 \example
 $$B = \{0,111\}^* = \bigcup_{k \ge 0}\{0,111\}^k$$
-$$\Phi_{\{0,111\^k}}(x) = \left( \Phi_{\{0,111\}}(x) \right)^k = (x+x^3)^k$$ 
+$$\Phi_{\{ 0,111\^k\} }(x) = \left( \Phi_{\{0,111\}}(x) \right)^k = (x+x^3)^k$$ 
 
 By the sum lemma, $\Phi_B(x) = \sum_{k \ge 0}\Phi_{\{0,111\}^k}(x) = \sum_{k \ge 0}(x+x^3)^k = \frac{1}{1-(x+x^3)}$ (geometric series with constant $0$). The number of strings in $B$ is $[x^n]\frac{1}{1-x-x^3}$
 
@@ -1046,11 +1046,60 @@ $$AB = \{11,111,1111\}$$
 $$\Phi_{A \times B}(x) = x^2 + 2x^3 + x^4, \Phi_{AB}(x) = x^2 + x^3 + x^4$$
 
 \begin{defn}
-	$AB$ is \textbf{ambiguous} if $\exists$ distinct pairs $(a_1,b_1),(a_2,b_2) \in A \times B$ such that $a_1b_1 = a_2b_2$. Otherwise, $AB$ is \textbf{unambiguous}. In other wrods, each string is uniquely generated.
+	$AB$ is \textbf{ambiguous} if $\exists$ distinct pairs $(a_1,b_1),(a_2,b_2) \in A \times B$ such that $a_1b_1 = a_2b_2$. Otherwise, $AB$ is \textbf{unambiguous}. In other words, each string is uniquely generated.
 \end{defn}
 
-When $AB$ is ambiguous, $\Phi_{A \times B}(x) \ne \Phi_{AB}(x)$. An ambiguous string appears in $A \times B$ multiple timesbut only one time in $AB$ ($\exists i | [x^i]\Phi_{A \times B}(x) > [x^i]\Phi_{AB}(x)$)
+When $AB$ is ambiguous, $\Phi_{A \times B}(x) \ne \Phi_{AB}(x)$. An ambiguous string appears in $A \times B$ multiple times but only one time in $AB$ ($\exists i | [x^i]\Phi_{A \times B}(x) > [x^i]\Phi_{AB}(x)$)
 
 When $AB$ is unambiguous, there is a natural bijection between $A \times B$ and $AB$ $( (a,b) \rightarrow ab )$ so then, $\Phi_{A \times B}(x) = \Phi_{AB}(x)$ and the product lemma applies.
+
+\lecture{01-06-2015}
+$AB$ works like the Cartesian product if it is unambiguous. $A \cup B$ is unambiguous if $A \cap B = \emptyset$.
+
+\textbf{General Series: } $A = \{ 1,11 \} B = \{ 00, 000 \} \Phi_{AB}(x) = \Phi_A(x) \Phi_B(x) = (x+x^2)(x^2+x^3)$
+
+$$S = \{ 0, 111 \}^* \quad \Phi_S(x) = \sum_{n \ge 0}\Phi_{\{0,111 \}^n}(x) = \sum_{n \ge 0}(x+x^3)^n = \frac{1}{1 - (x+x^3)}$$
+
+Theorem (sum and product lemmas for strings)
+Let $A,B$ be sets of strings.
+\begin{enumerate}
+	\item If $A \cap B = \emptyset$, then $\Phi_{A \cup B} = \Phi_A(x) + \Phi_B(x)$
+	\item If $AB$ is unambiguous, then $\Phi_{AB}(x) = \Phi_A(x) \Phi_B(x)$
+	\item If $A^*$ is unambiguous, then $\Phi_{A^*}(x) = \frac{1}{1 - \Phi_A(x)}$
+\end{enumerate}
+\textbf{Proof 1\\}
+Sum Lemma
+
+\textbf{Proof 2\\}
+There is a bijection between $A \times B$ and $AB$ when $AB$ is unambiguous $(a,b) \rightarrow ab$  (the inverse is possible due to the unambiguity of $AB$). Then the product lemma applies.
+
+\textbf{Proof 3\\}
+$A^*$ is unambiguous, by the sum lemma, $\Phi_{A^*}(x) = \sum_{n \ge 0}\Phi_{A^n}(x) = \sum_{n \ge 0}(\Phi_A(x))^n = \frac{1}{1 - \Phi_A(x)}$ since the constant term is zero. The only way to get a constant term is if $\epsilon \in A$. If $\epsilon \in A$ then $A^*$ is ambiguous. ($\epsilon = \epsilon \epsilon = \epsilon \epsilon \epsilon$)
+
+Three basic unambiguous decomposition rules for the set of all strings:
+\begin{enumerate}
+	\item $\{ 0,1 \}^*$ cut any string after every bit. (only $1$ way $\rightarrow$ unambiguous)
+	\item $\{ 0 \}^*(\{1\}\{0\}^*)^*$ cut just before every $1$
+	\item Block Decomposition. $\{0\}(\{1\}\{1\}^*\{0\}\{0\}^*)\{1\}^*$ The middle represents a block of $1$ followed by a block of zeros.
+
+		Cut off the string after each block of zeros. Each part consists of a block of $1$'s followed by a block of $0$'s. So it's in $\{1\}\{1\}^*\{0\}\{0\}^*$. Leading $0$'s are in $\{0\}^*$, trailing $1$'s are in $\{1\}^*$
+\end{enumerate}
+
+Restriction on substrings
+
+\example
+Let $S$ be the set of all strings with no $3$ consecutive zeros.
+
+Start with $\{0\}(\{1\}\{1\}^*\{0\}\{0\}^*)\{1\}^*$. Where can we find $000$? In $\{0\}^*$. Remove all instances of $000$ in $\{0\}^*$ to get $\{ \epsilon , 0, 00 \}$. So, $S = \{ \epsilon , 0, 00 \}(\{1\}\{ \epsilon , 0,00\})^*$ Note that runs of zero longer than $3$ still contain $000$.
+
+This is unambiguous because we are removing elements from an unambiguous expression.
+$$\Phi_S(x) = (1+x+x^2)\frac{1}{1-(x(1+x+x^2))} = \frac{1 + x+x^2}{1-(x+x^2+x^3)}$$
+
+The number of strings in $S$ with length $n$ is $[x^n]\Phi_S(x)$
+
+Using block decomposition, $\{0\}^* \rightarrow \{ \epsilon , 0,00 \} \quad \{0\}\{0\}^* \rightarrow \{0\}\{ \epsilon, 0\} \rightarrow \{0,00\}$ Thus, $S = \{ \epsilon,0,00\}(\{1\}\{1\}^*\{0,00\})^*\{1\}^*$
+
+In general, start with one of the basic decompositions. Remove parts of it that violate the desired conditions.
+
 
 \end{document}
