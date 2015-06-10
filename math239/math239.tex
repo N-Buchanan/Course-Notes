@@ -1033,7 +1033,7 @@ Assuming concatenation works like the cartesian product, $\Phi_{AB}(x) = \Phi_A(
 
 \example
 $$B = \{0,111\}^* = \bigcup_{k \ge 0}\{0,111\}^k$$
-$$\Phi_{\{ 0,111\^k\} }(x) = \left( \Phi_{\{0,111\}}(x) \right)^k = (x+x^3)^k$$ 
+$$\Phi_{\{ 0,111\}^k }(x) = \left( \Phi_{\{0,111\}}(x) \right)^k = (x+x^3)^k$$ 
 
 By the sum lemma, $\Phi_B(x) = \sum_{k \ge 0}\Phi_{\{0,111\}^k}(x) = \sum_{k \ge 0}(x+x^3)^k = \frac{1}{1-(x+x^3)}$ (geometric series with constant $0$). The number of strings in $B$ is $[x^n]\frac{1}{1-x-x^3}$
 
@@ -1100,6 +1100,37 @@ The number of strings in $S$ with length $n$ is $[x^n]\Phi_S(x)$
 Using block decomposition, $\{0\}^* \rightarrow \{ \epsilon , 0,00 \} \quad \{0\}\{0\}^* \rightarrow \{0\}\{ \epsilon, 0\} \rightarrow \{0,00\}$ Thus, $S = \{ \epsilon,0,00\}(\{1\}\{1\}^*\{0,00\})^*\{1\}^*$
 
 In general, start with one of the basic decompositions. Remove parts of it that violate the desired conditions.
+
+\tutorial{02-06-2015}
+
+\textbf{Problem 1}
+Let $n \in \mathbb{N}$. Determine the number of compositions of $n$ into $4$ parts where exactly $2$ parts are even.
+
+We want $(a_1, a_2, a_3, a_4)$ such that $a_1 + a_2 + a_3 + a_4 = n$ and $2$ are even.
+
+$E = \{2,4,5, \dots \}$\\
+$O = \{1,3,5, \dots \}$ \\
+$S = E \times E \times O \times O \cup O \times O \times E \times E \cup \dots$
+
+This gives $\binom 42$ possible configurations.
+
+$\Phi_S(x) = \Phi_{E \times E \times O \tiems O}(x) + \dots + \Phi_{O \times O \times E \times E}(x)$ (all combinations)
+$\Phi_{E \times E \times O \times O}(x) = \Phi_E(x) \times \Phi_E(x) \times \Phi_O(x) \times \Phi_O(x) = \Phi_E(x)^2 \times \Phi_O(x)^2$ (all have the same generating function)
+$\Phi_S(x) = \binom 42 \Phi_E(x)^2 \times \Phi_O(x)^2$
+
+$\Phi_E(x) = x^2 + x^4 + x^6 + \dots = x^2(1+x^2 + x^4 + \dots) = \frac{x^2}{1-x^2}$\\
+$\Phi_O(x) = x + x^3 + x^5 + \dots = x(1+x^2+x^4+ \dots) = \frac{x}{1-x^2}$
+$\Phi_S(x) = 6 \left( \frac{x^2}{1-x^2} \right)^2 \left( \frac{x}{1-x^2} \right)^2 = \frac{6x^6}{(1-x^2)^4}$
+
+Thus, $[x^n] \frac{x}{1-x^2} \right)^2 = \frac{6x^6}{(1-x^2)^4}$ is the answer. We can change this to $6[x^{n-6}] \frac{1}{(1-x^2)^4} = 6[x^{n-6}] \sum_{j \ge 0} \binom {j+3}3 (x^2)^j$
+
+$n-6 = 2j, j = n/2 \times 3$ therefore the answer is $6 \binom {n/2}3 = [x^n]\Phi_S(x)$ if $n \ge 6$ and $n$ is even and $0$ otherwise.
+
+Note that $2$ even plus $2$ odd numbers is even and the lowest possible number is $2+2+1+1=6$
+
+\textbf{Problem 3}
+Let $a_n$ be the number of compositions of $n$. In class you showed that $a_n = 2^{n-1}$. This implies that $a_n$ satisfies the recurrence $a_n = 2a_{n-1} n \ge 2$ Give a combinatorial proof of this.
+
 
 
 \end{document}
