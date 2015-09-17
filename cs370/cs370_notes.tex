@@ -1,0 +1,93 @@
+\documentclass{article}
+
+\usepackage{../courseNotes}
+
+\courseName{Numerical Computation}
+\courseCode{CS 370}
+\prof{George Lahban}
+\auth{Nolan Buchanan}
+\secName{Topic}
+\term{4A}
+
+
+\begin{document}
+
+The course will cover $5$ topics.
+
+\begin{enumerate}
+	\item Floating Point Arithmetic
+		\begin{itemize}
+			\item What is this?
+			\item What goes wrong?
+			\item How to analyze errors
+		\end{itemize}
+	\item Interpolation + Splines + Parametric Curves
+		\begin{itemize}
+			\item Motivation: Graphics
+			\item Issues: Move from discrete data to a continuous formula
+			\item Application: Handwritten letters, fonts
+		\end{itemize}
+	\item Initial Value Problems
+		\begin{itemize}
+			\item $y'(t) = f(t,y(t)), y(t_0) = y_0$
+			\item Motivation: Prediction of motion
+			\item Application: Predator/prey, Angry Birds
+		\end{itemize}
+	\item Discrete Fourier Analysis
+		\begin{itemize}
+			\item Motivation: signal processsing, data compression
+			\item Application: iPods, CSI
+		\end{itemize}
+	\item Numerical Linear Algebra
+		\begin{itemize}
+			\item Motivation: effectively solve a linear systems equation
+			\item Application: Google PageRank
+		\end{itemize}
+\end{enumerate}
+
+\section{Floating Point Arithmetic}
+
+\begin{itemize}
+	\item Computer arithmetic is approximate arithmetic
+		\subitem Real numbers require infinite digits
+		\subitem Computer numbers have finite digits
+		\subitem $\sqrt{2}, \pi, e$ don't exist (typically)
+\end{itemize}
+Thus, computer arithmetic computations are not always correct.
+
+\textbf{Examples}
+\begin{enumerate}
+	\item $e^{-5.5}$ usig $5$ digit accuracy.
+		Recall the Taylor expansion:
+		$e^x = 1 + x + \frac{x^2}{2} + \frac{x^3}{6}  + \dots + \frac{x^n}{n!}$
+		Also:
+		$e^{-x} = \sum_{i=0}^{\infty} \frac{(-1)^ii}{i!}$
+
+		After $25$ terms, the first $5$ digits stop changing
+
+		By calculating using $e^{-5.5}$ we get $0.0026363$ but calculating using $\frac{1}{e^{5.5}}$ we get $0.0040868$.
+
+	\item $x^2 + 62.1x + 1 = 0$ to an accuracy of $4$ digits.
+
+		$$x_1 = \frac{-b + \sqrt{b^2 - 4ac}}{2a} = -0.0200$$
+		$$x_2 = \frac{-b - \sqrt{b^2 - 4ac}}{2a} = -62.1$$
+
+		$a(x-x_1)(x-x_2) = ax^2+bx+c \rightarrow ax_1x_2 = c \rightarrow x_1 = \frac{c}{ax_2}, x_2 = \frac{-b - \sqrt{b^2 - 4ac}}{2a}$
+
+		This yields $x_1 = -0.0161$ and $x_2$ remains $-62.1$. Obviously not the same.
+
+	\item $\int_0^1 \frac{x^n}{x+ \alpha} dx = I_n$ Assume $\alpha$ is given and we want to find $I_0, I_1, I_2, I_100$
+
+		$I_0 = \int_0^1 \frac{x^n}{x+ \alpha} dx  = \int_0^1 \frac{(x + \alpha - \alpha) x^{n-1}}{x+\alpha}dx = \int_0^1 \frac{(x + \alpha)x^{n-1}}{x + \alpha}dx - \alpha \int_0^1 \frac{x^{n-1}}{x + \alpha}dx$
+
+		$= \int_0^1 x^{n-1} dx - \alpha \int_0^1 \frac{x^{n-1}}{x + \alpha}dx = \frac{x^n}n |_0^1 - \alpha \int_0^1 \frac{x^{n-1}}{x + \alpha}dx $ % not sure about the pipe
+		$ = \frac{1}n - \alpha I_{n-1}$
+
+		Programming this gives us:
+		$\alpha = 0.5 \rightarrow I_{100} = 0.00646, \alpha = 2.0 \rightarrow I_{100} = 2.1 \times 10^{27}$
+
+		If $\alpha$ is greater than $0$, then $\frac{x^n}{x + \alpha}$ cannot be greater than $1$ within the bounds of the integal. Thus, $\times 10^{27}$ is impossible.
+
+\end{enumerate}
+
+\end{document}
