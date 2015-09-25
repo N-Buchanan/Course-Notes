@@ -12,6 +12,8 @@
 
 \begin{document}
 
+\tpage
+\lecture{15-09-15}
 The course will cover $5$ topics.
 
 \begin{enumerate}
@@ -90,4 +92,68 @@ Thus, computer arithmetic computations are not always correct.
 
 \end{enumerate}
 
+\lecture{17-09-15}
+Real numbers look like $0$ or $0.\beta_1, \beta_2, \dots , \beta_t, \dots \times \beta^p$ with $\beta_1 \neq 0, 0 \leq \beta_i < \beta$ where $\beta$ is the base.
+
+Floating poing number system: $F(\beta, t, L, u)$ (base, precision, lowwer bound, upper bound) with numbers $0$ or $0.\beta_1 \beta_2 \dots \beta_t \times \beta^p$ and $\beta_1 \neq 0, 0 \leq \beta_i < \beta, L \leq p \leq u$.
+
+For example, in base $10$ with six digits $\pi = 0.314159 \times 10^1$
+
+Single Precision is represented as $F(2, 24, -126, 127)$. In other words:\\
+$1$ bit for $\pm$\\
+$8$ bits for the exponent\\
+$23$ bits for the number
+
+Double precision is represented as $F(2, 53, -1022, 1023)$. In other words:\\
+$1$ bit for $\pm$\\
+$11$ bits for the exponent\\
+$52$ bits for the number
+
+Note: 
+\begin{equation*}
+	x &= \text{real number}
+	&= \plusminus 0.x_1x_2 \dots x_t \dots \times \beta^p
+	fl(x) &=\plusminus 0.x_1x_2 \dots x_t \times \beta^p
+\end{equation*}
+
+Error?
+There is a relative error of $\frac{fl(x) - x}{x} = \delta$
+
+Note that $\delta x = fl(x) - x \rightarrow fl(x) = x(1+\delta)$
+
+We can bound any relative error:
+\begin{equation*}
+	|\delta| &= \left| \frac{0.00 \dots x_{x+1} x_{1+2} \dots \times \beta^p}{0.x_1x_2 \dots x_{x+1} x_{1+2} \dots \times \beta^p} \right|
+	& = \left| \frac{0.x_{x+1} x_{1+2} \dots \times \beta^{-t}}{x_1.x_2 \dots x_{x+1} x_{1+2} \dots \times \beta^{-1}} \right|
+	&= \left| \frac{0.x_{x+1} x_{1+2} \dots }{x_1.x_2 \dots x_{x+1} x_{1+2} \dots } \right| \beta^{1-t} < \beta^{1-t} (truncation)
+	&= \left| \frac{0.x_{x+1} x_{1+2} \dots }{x_1.x_2 \dots x_{x+1} x_{1+2} \dots } \right| \beta^{1-t} < \frac{1}{2}\beta^{1-t} (rounding)
+\end{equation*}
+
+To simplify we define machine-epsilon as :
+
+$$\epsilon = \beta^{1-t} (truncation), \frac 12 \beta^{1-t}(rounding)$$ %TODO: need to get piecewise functions working again
+
+$$fl(x) = x(1+ \delta), | \delta | < \epsilon$$
+
+Floating Point arithmetic
+If $x$  and $y$ are two real numbers, $x \oplus y = fl(fl(x) + l(y))$
+
+For example, $x = 0.11111111 \dots, y = 0.11101110 \dots$. Using four digit accuracy we have:
+\begin{equation*}
+	x \oplus y &= 0.1111 + 0.1110
+	& = 1.1101
+	& = 0.11101 \times 2^1
+	& = 0.1110 \times 2^1 \leftarrow \text{truncated}
+	& = 1.110
+\end{equation*}
+Note that this gives a second way to describe machine-epsilon i.e. it is the smallest non-zero number such that $1 \oplus \epsilon > 1$.
+
+Analyzing Floating Point Arithmetic
+$x,y$ are real numbers.
+
+\begin{equation*} %TODO: insert equation
+	
+\end{equation*}
+
+Note: If $x,y$ are of the same sign then $\frac{|x| + |y|}{|x+y|} = 1$ but if $x,y$ are of opposite signs and $x+y$ is approximately $0$ then $\frac{|x| + |y|}{|x+y|}$ can be very large! This is called catastrophic cancellation.
 \end{document}
